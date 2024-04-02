@@ -31,3 +31,20 @@ body {
     text-wrap: balance;
   }
 }
+
+.cuve {
+  transform: perspective(40070px) skewX(2deg) rotateX(10deg);
+  backface-visibility: visible;
+}
+
+.word {
+  overflow: hidden !important;
+}
+
+.img {
+  clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+}
+
+.police {
+  font-family: var(--font-space);
+}
