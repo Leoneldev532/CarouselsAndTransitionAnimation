@@ -1,5 +1,6 @@
 "use client";
 
+import Lenis from "@studio-freight/lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import Image from "next/image";
@@ -110,6 +111,42 @@ export default function Home() {
     const img = gsap.utils.toArray(".img");
     const im = gsap.utils.toArray(".im");
 
+    const ligne = gsap.utils.toArray(".ligne");
+    text4.forEach((char: any) => {
+      const text = new SplitType(char, { types: "lines,words" });
+
+      tl.fromTo(
+        text.words,
+        {
+          y: 100,
+          //   skewY: 1,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          delay: 0.2,
+
+          opacity: 1,
+          duration: 0.7,
+          //   skewY: 0,
+          ease: "power3.out",
+          stagger: {
+            amount: 0.2,
+          },
+          transformOrigin: " 45.5234px 14px",
+          scrollTrigger: {
+            trigger: char,
+            start: "top 95%",
+            end: "bottom 95%",
+            scrub: 7,
+            markers: true,
+            toggleActions: "restart none none reverse",
+          },
+        },
+        "<"
+      );
+    });
+
     text.forEach((char: any) => {
       const text = new SplitType(char, { types: "words,lines" });
 
@@ -160,42 +197,47 @@ export default function Home() {
       },
       "<"
     );
-
-    text4.forEach((char: any) => {
-      const texto = new SplitType(char, { types: "words,lines" });
-      const yl = gsap.timeline();
-
-      yl.fromTo(
-        texto.words,
+    ligne.forEach((item: any) => {
+      tl.to(
+        item,
         {
-          y: 120,
-        },
-        {
-          y: 0,
-          delay: 0.2,
-          duration: 1.7,
-          ease: "power3",
+          width: "100%",
+          duration: 0.5,
+          ease: "power3.out",
           scrollTrigger: {
+            trigger: item,
+            start: "top 95%",
+            end: "bottom 95%",
+            scrub: 7,
             markers: true,
-            scrub: true,
-            start: "top bottom",
-            end: "bottom 50%",
-            invalidateOnRefresh: true,
+            toggleActions: "restart none none reverse",
           },
         },
-        "<"
+        "-=0.5"
       );
     });
+
+    const lenis = new Lenis();
+
+    lenis.on("scroll", (e: any) => {});
+
+    lenis.on("scroll", ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1100);
+    });
+
+    gsap.ticker.lagSmoothing(0);
   });
 
   return (
-    <main className="flex flex-col min-h-screen bg-white text-black police   overflow-x-hidden items-center justify-between">
-      <div className="relative  maintransit  overflow-hidden min-h-screen flex w-full  bg-black justify-center items-center ">
+    <main className="flex flex-col min-h-screen bg-white text-black police   overflow-hidden items-center justify-between">
+      {/* <div className="relative  maintransit  overflow-hidden min-h-screen flex w-full  bg-black justify-center items-center ">
         <div className=" w-full h-full  tmain flex justify-center items-center ">
           <div className="h-36 relative  bg-white w-6 t1 "></div>
           <div className="h-6 relative  bg-white w-24  t2  top-20 left-4 rotate-13 "></div>
         </div>
-      </div>
+      </div> */}
       <div className="  flex flex-col  p-36 ">
         <span className=" overflow-hidden text-3xl px-36">
           <span className="txt overflow-hidden block w-full h-10   ">
@@ -236,22 +278,27 @@ export default function Home() {
         </span>
 
         <div className="min-h-screen  ty flex justify-center items-center w-full my-16">
-          <div className=" overflow-hidden  bg-red-400 text-3xl ">
-            <span className="txt4 overflow-hidden block w-full h-10   ">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis in
-            </span>
-            <span className="txt4 overflow-hidden block w-full h-10   ">
-              earum quos at officiis alias cupiditate hic incidunt eos minus
-              obcaecati id molestias deleniti expedita, mollitia cum quam?
-              Vitae,
-            </span>
-            <span className="txt4 overflow-hidden block w-full h-10 ">
-              reprehenderit numquam atque harum tempora nam illum corporis
-              cupiditate dicta?
-            </span>
-            <div className="h-0.5 my-8 bg-gray-200 lin w-4"></div>
-          </div>
+          <p className="txt4 overflow-hidden text-black   text-3xl ">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis in
+            earum quos at officiis alias cupiditate hic incidunt eos minus
+            obcaecati id molestias deleniti expedita, mollitia cum quam? Vitae,
+            reprehenderit numquam atque harum tempora nam illum corporis
+            cupiditate dicta?
+          </p>
         </div>
+        <div className="ligne w-0 h-0.5 bg-red-400"> </div>
+
+        <div className="  ty flex justify-center items-center w-full my-16">
+          <p className="txt4 overflow-hidden text-black   text-3xl ">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis in
+            earum quos at officiis alias cupiditate hic incidunt eos minus
+            obcaecati id molestias deleniti expedita, mollitia cum quam? Vitae,
+            reprehenderit numquam atque harum tempora nam illum corporis
+            cupiditate dicta?
+          </p>
+        </div>
+
+        <div className="ligne w-0 h-0.5 bg-red-400"> </div>
       </div>
     </main>
   );

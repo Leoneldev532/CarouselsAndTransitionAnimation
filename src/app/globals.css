@@ -37,7 +37,13 @@ body {
   backface-visibility: visible;
 }
 
-.word {
+.word,
+.line {
+  overflow: hidden !important;
+}
+
+.txt > .line {
+  /* height: 37px; */
   overflow: hidden !important;
 }
 
